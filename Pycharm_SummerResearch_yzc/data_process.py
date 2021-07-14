@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
-flag_RawData = 0            # 需要显示原始数据时置1
-flag_ProcessedData = 0      # 需要显示处理过的数据时置1
+flag_RawData = 1            # 需要显示原始数据时置1
+flag_ProcessedData = 1      # 需要显示处理过的数据时置1
 flag_GenExcel = 0           # 需要将处理过的数据生成excel文件时置1
-data = pd.read_csv("./up_w2.csv", encoding="big5")  # 从CSV文件导入
+data = pd.read_csv("./high_light.csv", encoding="big5")  # 从CSV文件导入
 
 raw_data = data.to_numpy()
 print(len(raw_data))  # 原始数据个数
@@ -35,8 +35,8 @@ if flag_RawData == 1:
     plt.figure()
     for i in range(5):
         plt.figure(i)
-        plt.plot(dataChannel_1[i + 10])
-        plt.plot(dataChannel_2[i + 10])
+        plt.plot(dataChannel_1[i])
+        plt.plot(dataChannel_2[i])
     plt.show()
 
 # 尝试在x方向归一化一组数据
