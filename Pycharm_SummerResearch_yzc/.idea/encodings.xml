@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/train.csv" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/weight.npy" charset="US-ASCII" />
+    <file url="file://$PROJECT_DIR$/右划数据.csv" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/左划数据.csv" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/顺时针_2.csv" charset="GBK" />
+  </component>
+</project>
