@@ -1,0 +1,56 @@
+//顺序：左划、右划、上划、下划、顺时针、逆时针、缩小、放大
+void setup() {
+  // put your setup code here, to run once:
+Serial.begin(9600);
+pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  int i = 0;
+  int j = 0;
+  int sum_1 = 0; 
+  int sum_2 = 0;
+  int sampleNumber = 500;
+  int sensorValue_01[sampleNumber] = {0};
+  int sensorValue_02[sampleNumber] = {0};
+  
+  digitalWrite(LED_BUILTIN, HIGH);
+
+  
+  for(i = 0; i < sampleNumber; i++)
+  {
+    sensorValue_01[i] = analogRead(A0);
+    sensorValue_02[i] = analogRead(A1);
+    delay(5); 
+  }
+  
+  for(i = 1; i < 251; i++)
+  {
+    sum_1 = 0;
+    sum_2 = 0;
+      for(j = (i - 1) * 2; j < 2 * i; j++)
+      {
+        sum_1 = sum_1 + sensorValue_01[j];
+        sum_2 = sum_2 + sensorValue_02[j];
+      }
+      for(j = (i - 1) * 2; j < 2 * i; j++)
+      {
+        sensorValue_01[j] = sum_1 / 2;
+        sensorValue_02[j] = sum_2 / 2;
+      }
+  }
+  
+  for(i = 0; i<sampleNumber; i++)
+  {
+    Serial.println(sensorValue_01[i]);
+  }
+ // Serial.println("**********end with 01**********");
+   for(i = 0; i<sampleNumber; i++)
+  {
+    Serial.println(sensorValue_02[i]);
+  }
+ // Serial.println("**********end with 02**********");
+   digitalWrite(LED_BUILTIN, LOW);
+   delay(1500);
+}
