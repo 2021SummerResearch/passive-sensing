@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 flag_RawData = 1            # 需要显示原始数据时置1
 flag_ProcessedData = 1      # 需要显示处理过的数据时置1
 flag_GenExcel = 0           # 需要将处理过的数据生成excel文件时置1
-data = pd.read_csv("./high_light.csv", encoding="big5")  # 从CSV文件导入
+data = pd.read_csv("./FIR_another_hightlight.csv", encoding="big5")  # 从CSV文件导入
 
 raw_data = data.to_numpy()
 print(len(raw_data))  # 原始数据个数

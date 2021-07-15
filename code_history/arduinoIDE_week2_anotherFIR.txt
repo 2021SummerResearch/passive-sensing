@@ -1,0 +1,90 @@
+//week 1: the system can collect data repeatedly and output the data by serial port. Still need to copy from serial monitor. 
+//week 2 update: add a FIR filter
+//plan: the system is expected to automatically generate an excel file.
+void setup() {
+  // put your setup code here, to run once:
+Serial.begin(9600);
+pinMode(LED_BUILTIN, OUTPUT);
+
+
+}
+int size =500;
+int N = 10;
+void Smooth(int data[])
+{
+    int Sum1;
+    Sum1=0;
+    for(int j=0;j<size;j++)
+    {
+        if(j<N/2)
+        {
+            for(int k=0;k<N;k++)
+            {
+                Sum1+=data[j+k];
+            }
+            data[j]=Sum1/N;
+        }
+        else
+            if(j<size -N/2)
+            {
+                for(int k=0;k<N/2;k++)
+                {
+                    Sum1+=(data[j+k]+data[j-k]);
+                }
+                data[j]=Sum1/N;
+            }
+            else
+            {
+                for(int k=0;k<size-j;k++)
+                {
+                    Sum1+=data[j+k];
+                }
+                for(int k=0;k<(N-size+j);k++)
+                {
+                    Sum1+=data[j-k];
+                }
+                data[j]=Sum1/N;
+            }
+        Sum1=0;
+    }
+}
+void loop() {
+  // put your main code here, to run repeatedly:
+  int i = 0;
+  int j = 0;
+  int sum_1; 
+  int sum_2;
+  int avgNumber;
+  int sampleNumber = 500;                  //单通道每组数据的个数
+  int sensorValue_01[sampleNumber] = {0};
+  int sensorValue_02[sampleNumber] = {0};  //以上两个数组用于存储采集到的信号
+  int sensorValue_01_FIR[sampleNumber] = {0};
+  int sensorValue_02_FIR[sampleNumber] = {0};  //以上两个数组用于存储降噪处理过的信号
+  digitalWrite(LED_BUILTIN, HIGH);
+
+  
+  for(i = 0; i < sampleNumber; i++)
+  {
+    sensorValue_01[i] = analogRead(A0);
+    sensorValue_02[i] = analogRead(A1);
+    delay(5); 
+  }
+
+   digitalWrite(LED_BUILTIN, LOW);
+  // 使用FIR滤波器进行降噪处理
+  avgNumber = 10; //FIR滤波器的n参数
+  Smooth(sensorValue_01);
+  Smooth(sensorValue_02);
+  for(i = 0; i<sampleNumber; i++)
+  {
+    Serial.println(sensorValue_01[i]);
+  }
+ // Serial.println("**********end with 01**********");
+   for(i = 0; i<sampleNumber; i++)
+  {
+    Serial.println(sensorValue_02[i]);
+  }
+ // Serial.println("**********end with 02**********");
+  
+   delay(1500);
+}
